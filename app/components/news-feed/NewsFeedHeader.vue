@@ -20,11 +20,12 @@ const emit = defineEmits<{
         class="text-blue-800 text-2xl size-10 rounded-full bg-white shadow-base flex items-center justify-center"
         type="button"
         :disabled="disabledResetBtn"
+        data-testid="reset-btn"
         @click="emit('reset')"
       >
         <Icon name="dashicons:update" />
       </button>
     </div>
-    <SharedSearchInput v-model="search" />
+    <SharedSearchInput v-model="search" data-testid="search-input" />
   </div>
 </template>

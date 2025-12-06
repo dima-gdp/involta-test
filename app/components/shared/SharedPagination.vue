@@ -44,7 +44,7 @@ function onClickItem(item: number | string) {
 </script>
 
 <template>
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2" data-testid="pagination">
     <button
       v-for="(item, index) in pages"
       :key="index"

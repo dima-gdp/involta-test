@@ -24,41 +24,28 @@ export function useNewsFeedFilter() {
 
   const currentPage = ref(Number(route.query.page) || 1)
 
+  function getQuery(page?: string) {
+    return {
+      source: filter.value.source || undefined,
+      search: filter.value.source || undefined,
+      page,
+    }
+  }
+
   // Синхронизация filter -> URL
-  watch(filter, (newFilter) => {
-    const query = { ...route.query }
-
-    if (newFilter.source) {
-      query.source = newFilter.source
-    }
-    else {
-      delete query.source
-    }
-
-    if (newFilter.search) {
-      query.search = newFilter.search
-    }
-    else {
-      delete query.search
-    }
+  watch(filter, async () => {
+    const query = getQuery()
+    await router.replace({ query })
 
     // Сбрасываем page при изменении фильтров
     currentPage.value = 1
-
-    router.replace({ query })
   }, { deep: true })
 
-  watch(currentPage, (newPage) => {
-    const query = { ...route.query }
+  watch(currentPage, async (newPage) => {
+    const page = newPage > 1 ? String(newPage) : undefined
+    const query = getQuery(page)
 
-    if (newPage > 1) {
-      query.page = String(newPage)
-    }
-    else {
-      delete query.page
-    }
-
-    router.replace({ query })
+    await router.replace({ query })
   })
 
   function resetFilter() {

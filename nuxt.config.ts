@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from '@tailwindcss/vite'
 
+const isTest = process.env.TEST === 'true'
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
@@ -11,18 +13,24 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
   css: ['./app/assets/css/main.css'],
-  // Обойдем CORS
-  routeRules: {
-    '/api/mos.ru/rss': {
-      proxy: {
-        to: 'https://mos.ru/rss',
+  // Обойдем CORS (только если не тестовый режим)
+  routeRules: isTest
+    ? {}
+    : {
+        '/api/mos.ru/rss': {
+          proxy: {
+            to: 'https://mos.ru/rss',
+          },
+        },
+        '/api/ivanovo.bezformata.com/rss': {
+          proxy: {
+            to: 'https://ivanovo.bezformata.com/rss.xml',
+          },
+        },
       },
-    },
-    '/api/ivanovo.bezformata.com/rss': {
-      proxy: {
-        to: 'https://ivanovo.bezformata.com/rss.xml',
-      },
-    },
+  // В тестовом режиме добавляем mock-server routes
+  nitro: {
+    scanDirs: isTest ? ['../mock-server'] : [],
   },
   compatibilityDate: '2025-07-15',
   vite: {

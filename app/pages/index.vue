@@ -11,6 +11,7 @@ const { filter, currentPage, resetFilter, items, totalPages } = useNewsFeed()
 // Загрузка данных при изменении source
 watch(() => filter.value.source, async (val) => {
   try {
+    isError.value = false
     await newsFeedStore.loadBySource(val)
   }
   catch {
@@ -40,10 +41,16 @@ const { viewType } = useNewsFeedViewType()
 
 const isMounted = useMounted()
 
-function onReset() {
-  newsFeedStore.resetAll()
-  resetFilter()
-  currentPage.value = 1
+async function onReset() {
+  try {
+    isError.value = false
+    newsFeedStore.resetAll()
+    resetFilter()
+    await newsFeedStore.loadBySource()
+  }
+  catch {
+    isError.value = true
+  }
 }
 </script>
 
@@ -76,22 +83,20 @@ function onReset() {
         Загрузка
       </div>
 
-      <div v-else-if="isError">
-        <div class="text-center py-12 text-gray-500">
-          Произошла ошибка при загрузке новостей
-        </div>
-      </div>
+      <h4 v-else-if="isError" class="text-center py-12 text-gray-500">
+        Произошла ошибка при загрузке новостей
+      </h4>
 
       <div
         v-else-if="items.length"
         class="mb-6"
       >
         <div>
-          <NewsFeedListGrid
+          <LazyNewsFeedListGrid
             v-if="viewType === 'grid'"
             :items="items"
           />
-          <NewsFeedListRow
+          <LazyNewsFeedListRow
             v-else
             :items="items"
           />
@@ -105,12 +110,12 @@ function onReset() {
         </div>
       </div>
 
-      <div
+      <h4
         v-else
         class="text-center py-12 text-gray-500"
       >
         Новости не найдены
-      </div>
+      </h4>
     </div>
   </main>
 </template>

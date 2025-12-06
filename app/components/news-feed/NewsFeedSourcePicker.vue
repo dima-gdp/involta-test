@@ -11,7 +11,7 @@ const sources: { value: NewsFeedSourceKey | undefined, label: string }[] = [
 </script>
 
 <template>
-  <div class="flex gap-4">
+  <div class="flex gap-4" data-testid="source-picker">
     <label
       v-for="source in sources"
       :key="source.value ?? 'all'"

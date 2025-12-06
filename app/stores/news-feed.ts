@@ -62,7 +62,7 @@ export const useNewsFeedStore = defineStore('news-feed', () => {
     return isLoadingSource.value || isLoadingAll.value
   })
 
-  async function resetAll() {
+  function resetAll() {
     mosFeedItems.value = []
     ivanovoFeedItems.value = []
   }

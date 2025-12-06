@@ -10,7 +10,7 @@ const viewTypes: { value: NewsFeedViewType, icon: string }[] = [
 </script>
 
 <template>
-  <div class="flex items-center gap-2.5">
+  <div class="flex items-center gap-2.5" data-testid="view-type-picker">
     <label
       v-for="viewType in viewTypes"
       :key="viewType.value"

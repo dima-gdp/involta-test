@@ -4,12 +4,16 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "build:test": "TEST=true nuxt build",
     "dev": "nuxt dev",
+    "dev:test": "TEST=true nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "preview:test": "TEST=true nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@nuxt/eslint": "^1.11.0",
@@ -28,5 +32,9 @@
     "tailwindcss": "^4.1.17",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.1"
   }
 }
