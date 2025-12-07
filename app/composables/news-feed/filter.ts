@@ -27,7 +27,7 @@ export function useNewsFeedFilter() {
   function getQuery(page?: string) {
     return {
       source: filter.value.source || undefined,
-      search: filter.value.source || undefined,
+      search: filter.value.search || undefined,
       page,
     }
   }

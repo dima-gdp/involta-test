@@ -12,6 +12,9 @@ export default defineNuxtConfig({
     '@nuxt/image',
   ],
   devtools: { enabled: true },
+  alias: {
+    '@': './app',
+  },
   css: ['./app/assets/css/main.css'],
   // Обойдем CORS (только если не тестовый режим)
   routeRules: isTest

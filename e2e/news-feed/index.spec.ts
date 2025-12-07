@@ -74,7 +74,6 @@ test.describe('News feed page', () => {
     await expect(newsItem).toHaveCount(4)
 
     await page.route('/api/ivanovo.bezformata.com/rss', async (route) => {
-      console.log('wefwef')
       await route.fulfill({
         status: 404,
         contentType: 'text/plain',
